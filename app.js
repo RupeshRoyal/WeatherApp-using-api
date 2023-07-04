@@ -12,7 +12,7 @@ app.get("/",function(req,res){
 
 app.post("/",function(req,res){
   const city=  req.body.cityName;
-  const url="https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=c35e060d2040d3e7b1d41d5bf537b666#";
+  const url="https://api.openweathermap.org/data/2.5/weather?q="+city+"&units=metric&appid=c35e060d2040d3e7b1d41d5bf537b666";
 
    https.get(url, function(response){
    console.log(response.statusCode);
@@ -23,10 +23,16 @@ app.post("/",function(req,res){
       const feelsLike=weatherData.main.feels_like;
       const descript=weatherData.weather[0].description;
       const icon=weatherData.weather[0].icon;
+      const cityCoordlong=weatherData.coord.lon;
+      const cityCoordlati=weatherData.coord.lat;
+      const windSpeed=weatherData.wind.speed;
       const imageUrl="http://openweathermap.org/img/wn/"+icon+"@2x.png";
       res.write("<h1>The Temperature in "+city+" is "+tempa+" degree celcius and feelslike "+feelsLike+" degree celcius </h1>");
       res.write("<h2>weather is "+descript+"</h2>");
       res.write("<img src="+imageUrl+">");
+      res.write("<h2>Longitude: "+cityCoordlong+" &Lattitide: "+cityCoordlati+"</h2>");
+      res.write("<h2>Wind Speed:"+windSpeed+"</h2>")
+
       res.send();
     });
   });
